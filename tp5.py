@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
+import matplotlib.pyplot as plt
 import numpy as np
 
 EXP = 30
@@ -65,4 +64,9 @@ print("Desvio: ", standar)
 ic = confidence_interval(100, media,standar)
 print("Intervalo de confianza: ", ic)
 
-
+plt.hist(tiempos_ejecucion_corr, 20, color="red")
+plt.title("Tiempo total de corridas")
+plt.show()
+plt.title("Tiempo total de experimetos")
+plt.hist(tiempos_ejecucion_exp, 20, color="green")
+plt.show()
