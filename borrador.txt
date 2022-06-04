@@ -1,0 +1,110 @@
+SIMULACION:
+
+Por defecto empezamos con aforo del 45% - CONFIRMAR
+
+Reloj: sin pararse. 
+
+Un EVENTO por cada minuto, que pueden ser: 
+	- INTERRUPCIONES
+	- REANUDACION
+	- ARRIVOS
+	- FNC (faltas no cobradas)
+
+	¿ESTO ES FEL?
+
+
+¿¿¿  FEL = { INICIO - INTERRUPCION - REANUDACION - ARRIVOS - FINAL-PARTIDO}  ???
+
+FALTAS ¿A QUE LLAMAMOS FALTA?
+
+
+
+------------------INTERRUPCIONES---------------------------------
+
+INTERRUPCIONES ={ GOL(PARTIDA-DE-HINCHAS), PENAL(PARTIDA-DE-HINCHAS), CAMBIOS, LATERAL, LESIONADOS, 
+		          AFORO MENOS DEL 45%(esperar ARRIVO-DE-HINCHAS) } 
+
+¿Que es lo que hace que se vaya la gente?
+	- GOLES A FAVOR AL EQUIPO RIVAL
+	- FNC (faltas no cobradas)
+	- PENALES
+
+
+PARTIDA-DE-HINCHAS: (gente que se va del estadio) 
+	- ¿Cuando es valido tenerlo en cuenta?
+	- ¿Tiene sentido que ocurra en cualquier momento del partido? 
+	- ¿O solo cuando ocurre los eventos que hace que se vaya la gente?
+
+EVENTO: INTERRUPCIONES 
+
+- GOL: ¿que pasa? Tener en cuenta
+	- calcular tiempo de retardo en terminar el festejo de gol
+	- calcular hinchas que se van del estadio
+	- verificar: 
+		- cant.hinchas <= capacidad estadio y cant.hinchas >= aforo 45% 
+			MOTRAR CANTIDAD DE GENTE ACTUAL
+		- cant.hinchas <= capacidad estadio y cant.hinchas < aforo 45%
+			(PARAR PARTIDO)
+			MOSTRAR CANTIDAD DE GENTE ACTUAL
+			(esperar que el aforo se complete)
+			(generar un evento en el proximo minuto)
+			- hay hinchas esperando ingresar
+				ARRIVO-DE-HINCHAS
+			- no hay hinchas esperando 
+				(generar un evento en el proximo minuto)		
+		- cant.hinchas = capacidad estadio
+			¿tiene sentido esta condición?
+	- reanudar partido (evento: REANUDACION)
+
+
+- PENAL: ¿que pasa? Tener en cuenta
+	- calcular tiempo de retardo en ejecutarse el penal
+	- verificar si es gol:
+		
+		- es GOL
+			- calcular tiempo de retardo en terminar el festejo de gol
+			sacar del medio
+			- calcular hinchas que se van del estadio
+			- verificar: 
+				- cant.hinchas <= capacidad estadio y cant.hinchas >= aforo 45% 
+					MOTRAR CANTIDAD DE GENTE ACTUAL
+				- cant.hinchas <= capacidad estadio y cant.hinchas < aforo 45%
+					(PARAR PARTIDO)
+					MOSTRAR CANTIDAD DE GENTE ACTUAL
+					(esperar que el aforo se complete)
+					(generar un evento en el proximo minuto)
+					- hay hinchas esperando ingresar
+						ARRIVO-DE-HINCHAS
+					- no hay hinchas esperando 
+						(generar un evento en el proximo minuto)		
+				- cant.hinchas = capacidad estadio
+					¿tiene sentido esta condición?
+			- saltar a reanudar partido (evento: REANUDACION)
+
+		- no es GOL 
+			- la tiro afuera
+				saque de arco
+				- calcular tiempo de retardo en sacar del arco
+			- atajo el arquero
+				- calcular tiempo de retardo en sacar del arco
+	- reanudar partido (evento: REANUDACION)
+
+
+- CAMBIOS: ¿que pasa? Tener en cuenta
+	- calcular tiempo de retardo en terminar de hacerse el cambio
+	- reanudar partido (evento: REANUDACION)
+
+
+- LATERAL: ¿que pasa? Tener en cuenta
+	- calcular tiempo de retardo en terminar de hacerse el lateral
+	- reanudar partido (evento: REANUDACION)
+
+
+- LESIONADO: ¿que pasa? Tener en cuenta
+	- calcular tiempo de retardo en terminar de atender al lesionado 
+	- puede derivar en un cambio, verificar:
+		- jugador lesionado va a ser cambiado 
+			- calcular tiempo de retardo en terminar de hacerse el cambio
+			- sino saltar a reanudacion
+	- reanudar partido (evento: REANUDACION)
+
