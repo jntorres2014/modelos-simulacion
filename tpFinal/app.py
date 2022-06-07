@@ -10,11 +10,16 @@ def inicio():
 
 @app.route('/procesar', methods=['POST'])
 def procesar():
+    eventosPosibles = []
     nombre = request.form.get("nombre")
+    #eventosPosibles.apend(request.form.get("nombre"))
     edad = request.form.get("edad")
+    #eventosPosibles.apend(request.form.get("edad"))
     faltas= request.form.get("faltas")
-    laterales= request.form.get("laterales")    
-    #simulacion = Simulacion()
+    #eventosPosibles.apend(request.form.get("faltas"))
+    laterales= request.form.get("laterales")
+    #eventosPosibles.apend(request.form.get("laterales"))    
+    #simulacion = Simulacion(eventosPosibles)
     return render_template("index.html", nombre=nombre, edad=edad,faltas=faltas,laterales=laterales)
 
 @app.route('/query-example')

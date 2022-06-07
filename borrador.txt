@@ -35,7 +35,7 @@ PARTIDA-DE-HINCHAS: (gente que se va del estadio)
 	- ¿Tiene sentido que ocurra en cualquier momento del partido? 
 	- ¿O solo cuando ocurre los eventos que hace que se vaya la gente?
 
-EVENTO: INTERRUPCIONES 
+EVENTO DE INTERRUPCIONES 
 
 - GOL: ¿que pasa? Tener en cuenta
 	- calcular tiempo de retardo en terminar el festejo de gol
