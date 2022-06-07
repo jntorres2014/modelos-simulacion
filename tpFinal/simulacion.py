@@ -1,30 +1,74 @@
 from random import random, sample
 import random
 import numpy as np
-
-
 from estadio import Estadio
 from partido import Partido
 from tpFinal import inicializador
 
+listaDeUsuario= ['GOL','REANUDACION']
 # Se puede cambiar
-
 class Simulacion(object):
     def __init__(self):
         self.estadisticas = {}
         self.cantidadCorridas=0
+        self.contadores= {}
+        self.eventosPosibles = {}
         #self.reloj
+
+    
+    def atenderEvento(self,partido,evento):
+        if evento == 'INTERRUPCION':
+            #interrup = interrup + 1
+            print("*******INTERRUPCION**************")
+            #Veo que evento puede ser
+            #eventosPosibles= partido.verEvento()
+            #partido.revisarTipoEvento()
+            tiempoPerdido = random.randint(1, 4)
+            #self.tiempoInterrupciones.update({eventosPosibles[0] : tiempoPerdido})
+            partido.tiempoPerdido = tiempoPerdido + partido.tiempoPerdido
+            partido.eventos[reloj+tiempoPerdido] = 'REANUDACION'
+            reloj= reloj + tiempoPerdido -1
+        elif evento=='REANUDACION':
+            reanudacion =+1
+            print("**********REANUDACION***********")
+            reloj= reloj +1
+        elif evento=='ARRIVOS':
+            arrivos +=1
+            print("**********ARRIVOS***********")
+            if partido.cantidadHinchas <= partido.estadio.capacidad:
+                partido.cantidadHinchas += cantidadDeArrivoHinchas
+                #print('Entraron Hinchas, ahora son: %i de %i ',partido.cantidadHinchas,partido.estadio.capacidad)
+            else:
+            #print("me quedan %s hinchas de %s",partido.cantidadHinchas,partido.estadio.capacidad)
+            #Crear un evento de Interrupcion para esperar que se complete el aforo
+                pass
+        elif evento == 'FNC': #FALTAS NO    COBRADAS
+            fnc =+1
+            print("**********FALTA NO COBRADA***********")
+        if random.randint(0,3) == 3:
+            partido.cantidadHinchas = partido.cantidadHinchas - cantidadDePartidaDeHinchas
+            #print("se fueron hinchas ahora quedan: ", partido.cantidadHinchas)
+        if not partido.estadio.cumpleAforo(partido.cantidadHinchas):
+            pass
+        #partido.crearEventos(reloj,'NOCUMPLEAFORO')
+        #crear un evento de interrucion por arrivo de hinchas.
+        #print(reloj)
+
+        pass
+        
     def simular(self,cantidadCorridas,aforo,eventosPosibles):
         pass
+
     def simular(self):
         tiempoInterrupciones = {}
-        tiempoTotal= 90
+        tiempoTotal= 5400 # 90 minutos en segundos
         adicion=0
         cantidadDeArrivoHinchas=15
         cantidadDePartidaDeHinchas = 30
         simulacion = Simulacion()
-        CORRIDAS = 5
+        CORRIDAS = 7
         corrida = 1
+        tiempoEfectivo=0
         estadisticasCorridas = {}
         while corrida <= CORRIDAS:
             tiempoInterrupciones = {}
@@ -38,29 +82,36 @@ class Simulacion(object):
             reanudacion=0
             arrivos=0
             partido.eventos = partido.inicializar()
-            
             #print(partido.eventos)
             print(partido.eventos)
             while (reloj <= tiempoTotal + adicion):
+                print("reloj: ",reloj)
                 evento = partido.eventos[reloj]
+                print(evento)
                 evento = evento[0]
+                if listaDeUsuario.index("GOL")is None:
+                    print("Entro hay gol")
                 if evento == 'INTERRUPCION':
                     interrup = interrup + 1
                     print("*******INTERRUPCION**************")
                     eventosPosibles= partido.verEvento()
+                    print("eventos posibles",eventosPosibles)
                     #partido.revisarTipoEvento()
-                    tiempoPerdido = random.randint(1,4)
-                    tiempoInterrupciones.update({eventosPosibles[0] : tiempoPerdido})
+                    tiempoPerdido = int(eventosPosibles[1])
+                    #tiempoInterrupciones.update({eventosPosibles[0] : tiempoPerdido})
                     partido.tiempoPerdido = tiempoPerdido + partido.tiempoPerdido
-                    partido.eventos[reloj+tiempoPerdido] = 'REAUDACION'
+                    
+                    partido.eventos[reloj+tiempoPerdido] = ['REANUDACION']
                     reloj= reloj + tiempoPerdido -1
                 elif evento=='REANUDACION':
-                    reanudacion =+1
                     print("**********REANUDACION***********")
-                    #print("Estoy en reanudacion")
-                    #print("despues de la interrupcion deberia valer: ")
-                    pass
-                    reloj= reloj +1
+                    reanudacion =+1
+                    tiempo = random.randint(10, 40)
+                    print("Tiempo: ", tiempo)
+                    tiempoEfectivo = tiempoEfectivo + tiempo 
+                    reloj= reloj + tiempo -1
+                if listaDeUsuario.index("REANUDACION")is None:
+                    print("Entro hay gol abajos")
                 elif evento=='ARRIVOS':
                     arrivos +=1
                     print("**********ARRIVOS***********")
