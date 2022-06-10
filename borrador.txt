@@ -1,8 +1,8 @@
 SIMULACION:
 
-Por defecto empezamos con aforo del 45% - CONFIRMAR
+Por defecto empezamos con aforo del 45% - [CONFIRMAR]
 
-Reloj: sin pararse. 
+Reloj: 90 minutos - 5400 segundos (sin pararse)
 
 Un EVENTO por cada minuto, que pueden ser: 
 	- INTERRUPCIONES
@@ -108,3 +108,30 @@ EVENTO DE INTERRUPCIONES
 			- sino saltar a reanudacion
 	- reanudar partido (evento: REANUDACION)
 
+
+- FALTA: 
+
+
+- AFORO -45%:
+
+
+
+---------------------   MIERCOLES 8 DE JUNIO 2022   -----------------------------------------------------------------
+
+¿QUE DEBE TENER NUESTRO PROYECTO?
+
+cantidad de equipos - 
+partidos idas y vueltas - 
+¿tener todas las interrupciones? - 
+
+Calcular cantidad de partidos en base a la candtidad de equipos 
+
+programa 
+	torneo
+		fechas
+			partidos
+
+			fin
+		fin
+	fin
+fin
