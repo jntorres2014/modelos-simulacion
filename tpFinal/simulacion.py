@@ -3,6 +3,9 @@ import random
 import numpy as np
 from estadio import Estadio
 from partido import Partido
+from torneo import Torneo
+from fechas import Fechas
+
 from tpFinal import inicializador
 
 listaDeUsuario= ['GOL','REANUDACION']
