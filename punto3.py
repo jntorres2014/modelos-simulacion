@@ -4,6 +4,7 @@ from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
 import punto4 
+
 #Una transformación para que la variable aleatoria tenga una distribución de probabilidad Exponencial con parámetro   = 12.
 ################# A #################
 muestra = np.random.rand(1000)

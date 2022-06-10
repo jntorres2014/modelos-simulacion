@@ -127,9 +127,9 @@ class Torneo(object):
 
 
     def exportarEstadisticas(self):
-        pass
-    
-        data = pd.DataFrame(tiempos[1],index=tiempos[0].keys(), columns= tiempos[1].keys())
+        fechas=self.fechasTorneo
+        
+        data = pd.DataFrame(fechas,index=fechas[], columns= tiempos[])
         print("Tiempos perdidos:",tiempos[0]["TIEMPO PERDIDO"])
         datos= []
         for key in tiempos[1]:
