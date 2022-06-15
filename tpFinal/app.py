@@ -1,6 +1,7 @@
 from flask import Flask, request,render_template,views
 from matplotlib.pyplot import get
-from simulacion import Simulacion
+#from simulacion2 import Simulacions
+#from torneo import Torneo
 # create the Flask app
 app = Flask(__name__)
 
@@ -12,16 +13,13 @@ def inicio():
 def procesar():
     eventosPosibles = []
     nombre = request.form.get("nombre")
-    #eventosPosibles.apend(request.form.get("nombre"))
-    edad = request.form.get("edad")
-    #eventosPosibles.apend(request.form.get("edad"))
-    faltas= request.form.get("faltas")
-    #eventosPosibles.apend(request.form.get("faltas"))
-    laterales= request.form.get("laterales")
-    #eventosPosibles.apend(request.form.get("laterales"))    
+    listas = request.form.get("lista")
+    print("LISTAAAAAAAAAAAAAAAAAa",listas)
     #simulacion = Simulacion(eventosPosibles)
-    return render_template("index.html", nombre=nombre, edad=edad,faltas=faltas,laterales=laterales)
-
+    #torneo= Torneo(cantidadEquipos=10,nombreTorneo="nombre")
+    #simu=Simulacions(torneo) 
+    #simu.simular()    
+    return render_template("index.html", listas= listas)
 @app.route('/query-example')
 def query_example():
     language = request.args.get('framework')

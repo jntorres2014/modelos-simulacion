@@ -1,3 +1,4 @@
+from __future__ import print_function
 from random import random, sample
 import random
 from matplotlib.pyplot import pink
@@ -16,7 +17,7 @@ class Simulacions(object):
         self.torneo = torneo
 
     def simular(self):
-        cantidadEquipos = 10 
+        cantidadEquipos = 10
         contFechas = 1
         tiempoTotalPartido = 5400
         contPartido = 1
@@ -35,6 +36,7 @@ class Simulacions(object):
                 #fell = partido.crearFell()
                 tiemposPerdidos = 0
                 
+                #Empieza un partido
                 while relojPartido  <= tiempoTotalPartido  :
                     evento, avanceReloj,proxEvento= partido.verEvento(fell[relojPartido])
                     if not(proxEvento is None):  
@@ -46,20 +48,31 @@ class Simulacions(object):
                     tiemposPerdidos= tiemposPerdidos + avanceReloj
                 partido.tiempoEfectivo= relojPartido - tiemposPerdidos
                 print("tiempo efectivo del partido: ",partido.tiempoEfectivo)
-                fecha.obtenerEstadisticasDePartido(contPartido,partido=partido)
+                fecha.obtenerEstadisticasDePartido(contPartido,partido)
                 #  print(fecha)
                 contPartido +=1
                 #print ("        *******PARTIDO {0}*******".format(contPartido-1))
-                #partido.estadisticasPorPartido()
+                partido.estadisticasPorPartido()
                                 
             #torneo.obtenerEstadisticasDePartido(contFechas, contPartido,partido)
-            torneo.obtenerEstadisticasDePartido(fecha, contPartido,partido)
+            #torneo.obtenerEstadisticasDePartido(fecha, contPartido,partido)
+            torneo.obtenerEstadisticasDeFecha(fecha,contFechas)
             fecha.mostrarEstadisticasFecha()
+            #torneo.fechas.update({contFechas-1:fecha})
+            #torneo.fechasTorneo.append(fecha)
             contFechas += 1
         #torneo.obtenerEstadisticasDeTorneo()
         torneo.mostrarTiempoEfectivoTorneo()
+        torneo.fechas.update({contFechas-1:fecha})
+        torneo.fechasTorneo.append(fecha)
+        torneo.exportarEstadisticas()
+        torneo.obtenerEstadisticasDeTorneo()
+        print(torneo.fechasTorneo)
+        print(torneo.fechas)
+        print(type(fecha))
 
-torneo= Torneo(cantidadEquipos=20,nombreTorneo="nombre")
+torneo= Torneo(cantidadEquipos=10,nombreTorneo="nombre")
 simu=Simulacions(torneo)
 simu.simular()    
+#torneo.exportarEstadisticas()
 

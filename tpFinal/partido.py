@@ -25,31 +25,31 @@ gol = 0.04
 fell = []
 
 
-ranges = {
-    'GOL': (0.,.004),
-    'CAMBIO': (.04, 0.12),
-    'LESION': (.120,0.0160),
-    'LATERAL': (0.190,0.210),
-    #'INTERRUPCION': (0.260,0.330),
-    #'falta_amonestacion_tiroLibre': (0.330 ,0.380),
-    'FALTA':(0.330 ,0.340),
-    #'PENAL': ('dependeraDeFalta'), 
-    'EVENTOEXTERNO': (0.380, 0.388),
-    'EVENTOEXTERNO': (0.388,0.391),
-    'NADA': (.12, 1.)
-}
+# ranges = {
+#     'GOL': (0.,.004),
+#     'CAMBIO': (.04, 0.12),
+#     'LESION': (.120,0.0160),
+#     'LATERAL': (0.190,0.210),
+#     #'INTERRUPCION': (0.260,0.330),
+#     #'falta_amonestacion_tiroLibre': (0.330 ,0.380),
+#     'FALTA':(0.330 ,0.340),
+#     #'PENAL': ('dependeraDeFalta'), 
+#     'EVENTOEXTERNO': (0.380, 0.388),
+#     'EVENTOEXTERNO': (0.388,0.391),
+#     'NADA': (.12, 1.)
+# }
 
 ranges = {
-    'cambio': (0., .004),
-    'gol': (.004, .0052),
-    'lesion': (.0052, .0056),
-    'lateral': (.0056, .0064),
-    'tiroDeEsquina': (.0064, .0070),
-    'falta_amonestacion_tiroLibre': (.0070, .0083),
+    'CAMBIO': (0., .004),
+    'GOL': (.004, .0052),
+    'LESION': (.0052, .0056),
+    'LATERAL': (.0056, .0064),
+    #'tiroDeEsquina': (.0064, .0070),
+    'FALTA': (.0070, .0083),
     #'penal': ('dependeraDeFalta'), 
-    'ingresoEspectador': (0.0083, 0.0085),
-    'ingresoAnimal': (0.0085,0.0086),
-    'nada': (.0086, 1.)
+    'EVENTOEXTERNO': (0.0083, 0.0086),
+    #'ingresoAnimal': (0.0085,0.0086),
+    'NADA': (.0086, 1.)
 }
 
 
@@ -78,32 +78,47 @@ class Partido(object):
         self.cantidadHinchas = self.estadio.capacidadMinima
         self.eventos = {}
         self.hinchasEsperando = 0
-
-        self.tiempoPerdidoFaltas = 0
-        self.tiempoPerdidoCambios = 0
-        self.tiempoPerdidoLaterales= 0
-        self.tiempoPerdidoPenal = 0
-        self.tiempoPerdidoGol = 0
-        self.tiempoPerdidoLesionados= 0
-        self.tiempoPerdidoAforo = 0
-        self.tiempoPerdidoEventoExterno = 0 
-        self.tiempoPerdidoNada = 0
-
-        self.cantCambios = 0
-        self.cantLaterales= 0
-        self.cantPenal = 0
-        self.cantGol = 0
-        self.cantLesionados= 0
-        self.cantAforo = 0
-        self.cantEventoExterno = 0 
-        self.cantFaltas = 0
-        self.cantNada = 0
+        
+        self.tiemposPerdidos = {
+        'FALTA': 0,
+        'CAMBIO':0,
+        'LATERAL':0,
+        'PENAL':0,
+        'GOL':0,
+        'LESION':0,
+        'AFORO':0,
+        'AFORO':0,
+        'EVENTOEXTERNO':0,
+        'NADA':0
+        }
+        self.cantidadInterrupciones = {
+        'FALTA': 0,
+        'CAMBIO':0,
+        'LATERAL':0,
+        'PENAL':0,
+        'GOL':0,
+        'LESION':0,
+        'AFORO':0,
+        'AFORO':0,
+        'EVENTOEXTERNO':0,
+        'NADA':0
+        }
+        # self.cantCambios = 0
+        # self.cantLaterales= 0
+        # self.cantPenal = 0
+        # self.cantGol = 0
+        # self.cantLesionados= 0
+        # self.cantAforo = 0
+        # self.cantEventoExterno = 0 
+        # self.cantFaltas = 0
+        # self.cantNada = 0
         #self.estadisticas= {}
         self.reloj=0
         
-    def __str__(self):
-        return self.estadisticasPorPartido()
-        #return "Estadio: %s Capacidad: %s Capacidad Minima: %s Cantidad de Accesos: %s" % (self.nombre, self.capacidad,self.capacidadMinima, self.cantidadAcceso)
+    # def __str__(self):
+    #     #return self.estadisticasPorPartido()
+    #     return ("{0} {1} {2}".format(self.tiempoEfectivo,self.reloj,self.cantNada))
+    #     #return ("Estadio: {0} Capacidad: {1} Capacidad Minima: {2} Cantidad de Accesos: {3}" ).format(self.estadio.nombre, self.estadio.capacidad,self.capacidadMinima, self.cantidadAcceso)
 
     def nuevaFell(self):
         numbers = np.random.uniform(0.,1.,6400)
@@ -122,38 +137,39 @@ class Partido(object):
             elif rng[0] < num <= rng[1]:
                 return event
  
-        
-
     def contabilizarEvento(self,evento,tiempo):
         #print("Evento: ",evento)
-        if (evento=='GOL'):
-            self.cantGol += 1
-            self.tiempoPerdidoGol += tiempo
-        if cantidadDeCambios < 6:    
-            if (evento=='CAMBIO'):
-                self.cantCambios +=1
-                self.tiempoPerdidoCambios += tiempo
-        if (evento=='LATERAL'):
-            self.cantLaterales +=1  
-            self.tiempoPerdidoLaterales += tiempo
-        if (evento=='PENAL'):
-            self.cantPenal += 1
-            self.tiempoPerdidoPenal += tiempo
-        if (evento=='LESION'):
-            self.cantLesionados +=1
-            self.tiempoPerdidoLesionados += tiempo
-        if (evento=='AFORO'):
-            self.cantAforo +=1
-            self.tiempoPerdidoAforo += tiempo
-        if (evento=='EVENTOEXTERNO'):
-            self.cantEventoExterno += 1 
-            self.tiempoPerdidoEventoExterno += tiempo           
-        if (evento=='FALTA'):
-            self.cantFaltas +=1
-            self.tiempoPerdidoFaltas += tiempo
-        if (evento=='NADA'):
-            self.cantNada +=1
-            self.tiempoPerdidoNada += tiempo
+        # if (evento=='GOL'):
+        #     self.cantGol += 1
+        #     self.tiempoPerdidoGol += tiempo
+        # if cantidadDeCambios < 6:    
+        #     if (evento=='CAMBIO'):
+        #         self.cantCambios +=1
+        #         self.tiempoPerdidoCambios += tiempo
+        # if (evento=='LATERAL'):
+        #     self.cantLaterales +=1  
+        #     self.tiempoPerdidoLaterales += tiempo
+        # if (evento=='PENAL'):
+        #     self.cantPenal += 1
+        #     self.tiempoPerdidoPenal += tiempo
+        # if (evento=='LESION'):
+        #     self.cantLesionados +=1
+        #     self.tiempoPerdidoLesionados += tiempo
+        # if (evento=='AFORO'):
+        #     self.cantAforo +=1
+        #     self.tiempoPerdidoAforo += tiempo
+        # if (evento=='EVENTOEXTERNO'):
+        #     self.cantEventoExterno += 1 
+        #     self.tiempoPerdidoEventoExterno += tiempo           
+        # if (evento=='FALTA'):
+        #     self.cantFaltas +=1
+        #     self.tiempoPerdidoFaltas += tiempo
+        # if (evento=='NADA'):
+        #     self.cantNada +=1
+        #     self.tiempoPerdidoNada += tiempo
+        self.cantidadInterrupciones[evento] += 1
+        self.tiemposPerdidos[evento] += tiempo
+        
 
 
     def agregarEvento(self, tiempo,evento):
@@ -161,7 +177,6 @@ class Partido(object):
 
     def verEvento(self,evento):
         proxEvento = 'NADA'
-
         #print("eventos: ",evento)
         if (evento == 'GOL'):
             tiempoPerdido = np.random.uniform(45,120)
@@ -172,7 +187,7 @@ class Partido(object):
                 if not(self.estadio.cumpleAforo(self.cantidadHinchas)):                
                     proxEvento = 'AFORO'        
         if (evento == 'CAMBIO'):
-            if(self.cantCambios < 6):
+            if(0):#self.cantCambios < 6):
                 #self.cantCambios +=1
                 tiempoPerdido = np.random.uniform(10,45)
             else:
@@ -225,7 +240,8 @@ class Partido(object):
             #listaPosiblesEventos.update({'NADA':tiempoPerdido})
             #listaPosiblesEventos.append('NADA')
         #evento = choice(tuple(listaPosiblesEventos.keys()))
-        
+        #self.cantidades.update({evento:catidad})
+        #self.tiemposPerdidos.update({evento:tiempoPerdido})
         return evento, tiempoPerdido, proxEvento
 
     
@@ -236,30 +252,31 @@ class Partido(object):
         return self.eventos           
         
     def estadisticasPorPartido(self):
-        print("Estadisticas: \ntiempoFaltas: {0} \ntiempoCambios: {1} \ntiempoLaterales: {2} \ntiempoPenal: {3} \ntiempoGol: {4} \ntiempoLesionados: {5}\ntiempoAforo: {6}\ntiempoEventosExternos: {7}\n"
-        .format(self.tiempoPerdidoFaltas,
-        self.tiempoPerdidoCambios,
-        self.tiempoPerdidoLaterales,
-        self.tiempoPerdidoPenal,
-        self.tiempoPerdidoGol,
-        self.tiempoPerdidoLesionados,
-        self.tiempoPerdidoAforo,
-        self.tiempoPerdidoEventoExterno)
-        )
-        print("Cantidades: \ncantidad Faltas: {0}\ncantidad Cambios: {1}\ncantidad Laterales: {2} \ncantidad Penal: {3} \ncantidad Gol: {4} \ncantidad Lesionados: {5}\ncantidad Aforo: {6}\ncantidad EventosExternos: {7}\ncantidad Nada {8} \n"
-        .format(self.cantFaltas,
-        self.cantCambios,
-        self.cantLaterales,
-        self.cantPenal,
-        self.cantGol,
-        self.cantLesionados,
-        self.cantAforo,
-        self.cantEventoExterno,
-        self.cantNada)
-        )
-        print ("Tiempo Efectivo: ", ((5400 - (self.tiempoPerdidoFaltas+self.tiempoPerdidoCambios +self.tiempoPerdidoLaterales +self.tiempoPerdidoPenal +self.tiempoPerdidoGol+
-        self.tiempoPerdidoLesionados+self.tiempoPerdidoAforo + self.tiempoPerdidoEventoExterno))/60) )
-        #return "hola"
+        print("*******TIEMPOS PERDIDOS {0}\n CANTIDADESSSSS {1}\n ".format(self.tiemposPerdidos,self.cantidadInterrupciones))
+        # print("Estadisticas: \ntiempoFaltas: {0} \ntiempoCambios: {1} \ntiempoLaterales: {2} \ntiempoPenal: {3} \ntiempoGol: {4} \ntiempoLesionados: {5}\ntiempoAforo: {6}\ntiempoEventosExternos: {7}\n"
+        # .format(self.tiempoPerdidoFaltas,
+        # self.tiempoPerdidoCambios,
+        # self.tiempoPerdidoLaterales,
+        # self.tiempoPerdidoPenal,
+        # self.tiempoPerdidoGol,
+        # self.tiempoPerdidoLesionados,
+        # self.tiempoPerdidoAforo,
+        # self.tiempoPerdidoEventoExterno)
+        # )
+        # print("Cantidades: \ncantidad Faltas: {0}\ncantidad Cambios: {1}\ncantidad Laterales: {2} \ncantidad Penal: {3} \ncantidad Gol: {4} \ncantidad Lesionados: {5}\ncantidad Aforo: {6}\ncantidad EventosExternos: {7}\ncantidad Nada {8} \n"
+        # .format(self.cantFaltas,
+        # self.cantCambios,
+        # self.cantLaterales,
+        # self.cantPenal,
+        # self.cantGol,
+        # self.cantLesionados,
+        # self.cantAforo,
+        # self.cantEventoExterno,
+        # self.cantNada)
+        # )
+        # print ("Tiempo Efectivo: ", ((5400 - (self.tiempoPerdidoFaltas+self.tiempoPerdidoCambios +self.tiempoPerdidoLaterales +self.tiempoPerdidoPenal +self.tiempoPerdidoGol+
+        # self.tiempoPerdidoLesionados+self.tiempoPerdidoAforo + self.tiempoPerdidoEventoExterno))/60) )
+        # #return "hola"
 
     def estadisticasFinales():
         pass
