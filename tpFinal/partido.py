@@ -39,6 +39,19 @@ ranges = {
     'NADA': (.12, 1.)
 }
 
+ranges = {
+    'cambio': (0., .004),
+    'gol': (.004, .0052),
+    'lesion': (.0052, .0056),
+    'lateral': (.0056, .0064),
+    'tiroDeEsquina': (.0064, .0070),
+    'falta_amonestacion_tiroLibre': (.0070, .0083),
+    #'penal': ('dependeraDeFalta'), 
+    'ingresoEspectador': (0.0083, 0.0085),
+    'ingresoAnimal': (0.0085,0.0086),
+    'nada': (.0086, 1.)
+}
+
 
 def event_in_range(num, ranges):
     for event, rng in ranges.items():

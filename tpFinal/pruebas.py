@@ -29,17 +29,18 @@ rangesPorFalta= {
 'penal':(0.70),
 'ingresoEspectador':(0.01)
 }
+
 ranges = {
-    'gol': (0.,.04),
-    'cambio': (.04, 0.12),
-    'lesion': (.120,0.0160),
-    'lateral': (0.160,0.260),
-    'tiroDeEsquina': (0.260,0.330),
-    'falta_amonestacion_tiroLibre': (0.330 ,0.380),
+    'cambio': (0., .004),
+    'gol': (.004, .0052),
+    'lesion': (.0052, .0056),
+    'lateral': (.0056, .0064),
+    'tiroDeEsquina': (.0064, .0070),
+    'falta_amonestacion_tiroLibre': (.0070, .0083),
     #'penal': ('dependeraDeFalta'), 
-    'ingresoEspectador': (0.380, 0.388),
-    'ingresoAnimal': (0.388,0.391),
-    'nada': (.12, 1.)
+    'ingresoEspectador': (0.0083, 0.0085),
+    'ingresoAnimal': (0.0085,0.0086),
+    'nada': (.0086, 1.)
 }
 
 
@@ -52,7 +53,7 @@ def event_in_range(num, ranges):
             
             return event
  
-        
+
 #ejemplo
 numbers = np.random.uniform(0.,1.,5400)
 gol =0
