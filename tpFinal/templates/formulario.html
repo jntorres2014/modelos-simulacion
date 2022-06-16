@@ -13,62 +13,77 @@
 
         <title>Modelos y Simulacion 2022</title>
     
-        <script type="text/javascript" languaje="javascript">
-            $(document).ready(function(){    
-                $("#form_login").on("submit", function(){
-                    $('#analizarResultados').show();
-                    return false;
-                });
-            });
+        <script type='text/javascript' 
+        src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+         $("#mostrar2").fadeOut();
+         $("#mostrar").fadeIn();            
+
+        });
+
+        $(document).ready(function() {
+         $("#mostrar").click(function(event) {
+            if (id_torneo = null) {
+                
+            } else {
+                // $("#mostrar").fadeOut();
+                // $("#mostrar2").fadeIn();            
+            }
+         });
+        });
         </script>
-    </head>
+
+</head>
     <body>
         <div class="container-fluid p-5 bg-primary text-white text-center">
-            <h1 class="display-1">Modelos y Simulacion 2022</h1>
-            <h1>TP FINAL - Torneo de Futbol</h1>
+            <img src="./static/fotoPortada.png" class="img-responsive" style="width:1200px !important; height:350px !important; border-radius: 15px;" alt="">
         </div>
+        <h1 style="text-align: center; color: black; position: center;">Cargar datos a Simular</h1>
         <form method="POST" action="{{url_for('procesar')}}">
             <!-- <div class="row g-3 align-items-center"> -->
-            <div class="container p-5 my-5 border">
+            <div class="container p-5 my-7 border">
                 <div class="col-auto">
-                    <br>
                     <label for="">Nombre de torneo</label>
-                    <input name="torneo" required type="text" placeholder="Nombre">
+                    <input name="torneo" id="id_torneo" required type="text" placeholder="Nombre">
                 </div>
                 <div class="col-auto">
                     <label for="cantidadEquipos">Cantidad de Equipos</label>
                     <input name="cantidadEquipos" required type="number" min="2" placeholder="Cantidad De Equipos">
                 </div>
                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="lista" value="Laterales" placeholder="Laterales" checked>
+                    <input class="form-check-input" type="checkbox" name="laterales" value="Laterales" placeholder="Laterales" checked>
                     <label for="Laterates"> Latereales</label>
                 </div>
                 <div class="form-check form-switch ">
-                    <input class="form-check-input" type="checkbox" name="lista" value="gol" placeholder="Goles"checked>
+                    <input class="form-check-input" type="checkbox" name="gol" value="gol" placeholder="Goles"checked>
                     <label for="gol"> Gol</label>
                 </div>
                 
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="lista" value="Faltas" placeholder="Faltas"checked>
+                    <input class="form-check-input" type="checkbox" name="faltas" value="Faltas" placeholder="Faltas"checked>
                     <label for="Faltas"> Faltas</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="lista" value="Lesionado" placeholder="" checked>
+                    <input class="form-check-input" type="checkbox" value="" placeholder="" checked>
                     <label for="Faltas"> Lesionado</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name= "lista" value="Otros" placeholder="" checked>
+                    <input class="form-check-input" type="checkbox" value="" placeholder="" checked>
                     <label for="Faltas"> Otros</label>
                 </div>
 
                 <div class="col-auto">
-                    <button type="button-ce" class="btn btn-success">Simular</button>
-                    <input type="submit" value="Enviar">
+                    <button type="button-ce" id="mostrar" value="1 Click" class="btn btn-success">Simular</button>
                 </div>
+                
+                <button class="btn btn-primary text-nowrap" type="button" id="mostrar2" value="1 Click">
+                    <span class="spinner-border spinner-border-sm mr-2"></span>
+                    Enviando datos...
+                </button>
             </div>
             </form>
         </body>
-
     <div class="container p-5 my-5 border">
         <button type="button-center" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Creadores
@@ -81,6 +96,13 @@
             Analizar Resultados
         </button>
     </div>
+
+    <div class="container-fluid p-12 bg-primary text-white text-center">
+        <h >
+            - UNPSJB Ingenieria - Todos los derechos reservados - 
+        </h>
+    </div>
+    
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
@@ -148,6 +170,7 @@
       </div>
     </div>
   </div>
+
 
 
 
