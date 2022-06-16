@@ -1,4 +1,3 @@
-from __future__ import print_function
 from random import random, sample
 import random
 from matplotlib.pyplot import pink
@@ -31,17 +30,17 @@ class Simulacions(object):
                 estadio = Estadio("Martin cup")
                 partido = Partido(estadio=estadio)
                 relojPartido = 0
-                fell = partido.nuevaFell()
-                #print("mostrando FEll: ",fell)
-                #fell = partido.crearFell()
+                fel = partido.nuevaFel()
+                #print("mostrando FEl: ",fel)
+                #fel = partido.crearFel()
                 tiemposPerdidos = 0
                 
                 #Empieza un partido
                 while relojPartido  <= tiempoTotalPartido  :
-                    evento, avanceReloj,proxEvento= partido.verEvento(fell[relojPartido])
+                    evento, avanceReloj, proxEvento= partido.obtenerEvento(fel[relojPartido])
                     if not(proxEvento is None):  
                         relojPartido += int(avanceReloj)
-                        fell[relojPartido] = proxEvento                        
+                        fel[relojPartido] = proxEvento
                     else:
                         relojPartido += int(avanceReloj)
                     partido.contabilizarEvento(evento,avanceReloj)
@@ -66,10 +65,10 @@ class Simulacions(object):
         torneo.fechas.update({contFechas-1:fecha})
         torneo.fechasTorneo.append(fecha)
         torneo.exportarEstadisticas()
-        torneo.obtenerEstadisticasDeTorneo()
-        print(torneo.fechasTorneo)
-        print(torneo.fechas)
-        print(type(fecha))
+        #torneo.obtenerEstadisticasDeTorneo()
+        #print(torneo.fechasTorneo)
+        #print(torneo.fechas)
+        #print(type(fecha))
 
 torneo= Torneo(cantidadEquipos=10,nombreTorneo="nombre")
 simu=Simulacions(torneo)

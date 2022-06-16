@@ -45,7 +45,7 @@
     #      # eventosPosibles= [# 'CAMBIO',
     #     # 'FALTA',
     #     # 'LATERAL',
-    #     # 'ARRIVO',
+    #     # 'ARRIBO',
     #     # 'PARTIDA'
     #     # 'LESIONADO'
     #     # 'NADA',]
@@ -62,14 +62,14 @@
     #     # 'CAMBIO',
     #     # 'FALTA',
     #     # 'LATERAL',
-    #     # 'ARRIVO',
+    #     # 'ARRIBO',
     #     # 'PARTIDA'
     #     # 'LESIONADO'
     #     # 'NADA',]
 
     #     eventosPosibles2 = [
     #         'INTERRUPCION',
-    #         'ARRIVOS',
+    #         'ARRIBOS',
     #         'FNC' #FALTAS NO COBRADAS
     #     ]
     #     # #evento con probabilidad de ocurrencia
@@ -78,7 +78,7 @@
     #     #     'CAMBIO':0.3, 
     #     #     'FALTA':0.8,
     #     #     'LATERAL':0.75,
-    #     #     'ARRIVO':0.60,
+    #     #     'ARRIBO':0.60,
     #     #     'PARTIDA':0.4,
     #     #     'NADA':0.90,
     #     #     'LESIONADO':0.14,  

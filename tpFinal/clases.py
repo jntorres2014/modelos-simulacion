@@ -8,7 +8,7 @@ from tpFinal import inicializador
 
 # Se puede cambiar
 PORCENTAJE = 0.45
-cantidadDeArrivoHinchas = 10
+cantidadDeArriboHinchas = 10
 cantidadDePartidaDeHinchas = 20
 tiempoTotal= 90
 adicion = 0
@@ -71,9 +71,9 @@ while corrida <= CORRIDAS:
             pass
         elif evento=='REANUDACION':
             pass
-        elif evento=='ARRIVOS':
+        elif evento=='ARRIBOS':
             if partido.cantidadHinchas <= partido.estadio.capacidad:
-                partido.cantidadHinchas += cantidadDeArrivoHinchas
+                partido.cantidadHinchas += cantidadDeArriboHinchas
                 print('Entraron Hinchas, ahora son: %i de %i ',partido.cantidadHinchas,partido.estadio.capacidad)
             else:
                 print("me quedan %s hinchas de %s",partido.cantidadHinchas,partido.estadio.capacidad)
@@ -86,7 +86,7 @@ while corrida <= CORRIDAS:
                 if not partido.estadio.cumpleAforo(partido.cantidadHinchas):
                     pass
                     #partido.crearEventos(reloj,'NOCUMPLEAFORO')
-                    #crear un evento de interrucion por arrivo de hinchas.
+                    #crear un evento de interrucion por arribo de hinchas.
         reloj +=1
         # if reloj == tiempoTotal:
         #     print("Termino el tiempo")

@@ -35,11 +35,11 @@ class Simulacion(object):
             reanudacion =+1
             print("**********REANUDACION***********")
             reloj= reloj +1
-        elif evento=='ARRIVOS':
-            arrivos +=1
-            print("**********ARRIVOS***********")
+        elif evento=='ARRIBOS':
+            arriBos +=1
+            print("**********ARRIBOS***********")
             if partido.cantidadHinchas <= partido.estadio.capacidad:
-                partido.cantidadHinchas += cantidadDeArrivoHinchas
+                partido.cantidadHinchas += cantidadDeArriboHinchas
                 #print('Entraron Hinchas, ahora son: %i de %i ',partido.cantidadHinchas,partido.estadio.capacidad)
             else:
             #print("me quedan %s hinchas de %s",partido.cantidadHinchas,partido.estadio.capacidad)
@@ -54,7 +54,7 @@ class Simulacion(object):
         if not partido.estadio.cumpleAforo(partido.cantidadHinchas):
             pass
         #partido.crearEventos(reloj,'NOCUMPLEAFORO')
-        #crear un evento de interrucion por arrivo de hinchas.
+        #crear un evento de interrucion por arribo de hinchas.
         #print(reloj)
 
         pass
@@ -66,7 +66,7 @@ class Simulacion(object):
         tiempoInterrupciones = {}
         tiempoTotal= 5400 # 90 minutos en segundos
         adicion=0
-        cantidadDeArrivoHinchas=15
+        cantidadDeArriboHinchas=15
         cantidadDePartidaDeHinchas = 30
         simulacion = Simulacion()
         CORRIDAS = 7
@@ -83,7 +83,7 @@ class Simulacion(object):
             fnc=0
             interrup=0
             reanudacion=0
-            arrivos=0
+            arriBos=0
             partido.eventos = partido.inicializar()
             #print(partido.eventos)
             print(partido.eventos)
@@ -115,11 +115,11 @@ class Simulacion(object):
                     reloj= reloj + tiempo -1
                 if listaDeUsuario.index("REANUDACION")is None:
                     print("Entro hay gol abajos")
-                elif evento=='ARRIVOS':
-                    arrivos +=1
-                    print("**********ARRIVOS***********")
+                elif evento=='ARRIBOS':
+                    arribos +=1
+                    print("**********ARRIBOS***********")
                     if partido.cantidadHinchas <= partido.estadio.capacidad:
-                        partido.cantidadHinchas += cantidadDeArrivoHinchas
+                        partido.cantidadHinchas += cantidadDeArriboHinchas
                         #print('Entraron Hinchas, ahora son: %i de %i ',partido.cantidadHinchas,partido.estadio.capacidad)
                     else:
                         #print("me quedan %s hinchas de %s",partido.cantidadHinchas,partido.estadio.capacidad)
@@ -134,7 +134,7 @@ class Simulacion(object):
                         if not partido.estadio.cumpleAforo(partido.cantidadHinchas):
                             pass
                             #partido.crearEventos(reloj,'NOCUMPLEAFORO')
-                            #crear un evento de interrucion por arrivo de hinchas.
+                            #crear un evento de interrucion por arribo de hinchas.
                 #print(reloj)
                 reloj = reloj + 1
                 tiempoInterrupciones.update({"TIEMPO PERDIDO":partido.tiempoPerdido})
@@ -149,7 +149,7 @@ class Simulacion(object):
             print("tiempo Perdido del partido",corrida,partido.tiempoPerdido)
             print ("tiempo total de partido: ",reloj-1)
             corrida += 1
-            print("interrup {0} arrivos {1} reanudacion {2} fnc {3}".format(interrup,arrivos,reanudacion,fnc))
+            print("interrup {0} arriBos {1} reanudacion {2} fnc {3}".format(interrup,arriBos,reanudacion,fnc))
             
             for key in tiempoInterrupciones:
                 print ("Interrupciones por",key, ":", tiempoInterrupciones[key])

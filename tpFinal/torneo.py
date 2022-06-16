@@ -1,4 +1,4 @@
-from gpg import Data
+#from gpg import Data
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -163,5 +163,5 @@ class Torneo(object):
         plt.pie(self.tiempoEfectivoTorneo)
         #plt.pie(1)
         plt.savefig("./static/tiemposPerdidos2.png") 
-        plt.show() 
+        #plt.show() 
         return 

@@ -18,7 +18,7 @@ colores = ['red','green','blue','yellow']
 plt.pie(x=df["X"],labels=tab.index,colors=colores) 
 plt.xlabel("Perdidas de tiempo")
 plt.savefig("notas.png")
-plt.show()
+#plt.show()
 
 # list1 = [10,20,30,40]
 # list2 = [40,30,20,10]
