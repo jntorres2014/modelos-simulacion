@@ -17,6 +17,14 @@ from fechas import Fechas
 #contFechas= 0
 tiempoTotalPartido = 5400
 #contPartido = 0
+
+rutas = { # rutas para las imgs generadas
+    'tiemposPerdidosTorneo': './static/tiemposPerdidosTorneo.png',
+    'cantidadesTorneo': "./static/cantidadesTorneo.png"
+}
+
+
+
 class Simulacion(object):
     def __init__(self,torneo):
         self.torneo = torneo
@@ -64,7 +72,7 @@ class Simulacion(object):
                 fecha.mostrarEstadisticasFecha()
                 contFechas += 1
                 self.torneo.mostrarEstadisticasDeTorneo()
-            tiemposPertidos, cantidades=self.mostrarEstadisticasDeSimulacion(self.torneo)
+            tiemposPertidos, cantidades = self.mostrarEstadisticasDeSimulacion(self.torneo)
             self.datosTorneo.update({contTorneo:[tiemposPerdidos,cantidades]})
             contTorneo +=1
         self.generarGraficos(self.torneo)
@@ -73,6 +81,7 @@ class Simulacion(object):
     
         
     def mostrarEstadisticasDeSimulacion(self,torneo):
+        
         estadisticasTiempos= []
         estadisticasCantidades = []
         tiemposLista = []
@@ -101,13 +110,13 @@ class Simulacion(object):
         plt.clf() 
                 
         fig = go.Figure(data=[go.Pie(labels=cantidadesLista, values=estadisticasCantidades)])
-        fig.write_image("./static/cantidades.png")
+        fig.write_image(rutas['cantidadesTorneo'])
         print(type(fig))
         print(fig)
         #fig.show()
         #fig.clf()                        
         fig = go.Figure(data=[go.Pie(labels=tiemposLista, values=estadisticasTiempos)])
-        fig.write_image("./static/tiemposPerdidos.png")
+        fig.write_image(rutas['tiemposPerdidosTorneo'])
 
         # plt.pie(estadisticasTiempos,labels=tiemposLista,shadow=True,autopct='%1.1f%%')
         # plt.title("Tiempos perdidos por interrupcion")

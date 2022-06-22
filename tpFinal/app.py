@@ -1,6 +1,6 @@
 from flask import Flask, request,render_template,views
 from matplotlib.pyplot import get
-from simulacion import Simulacion
+from simulacion import Simulacion, rutas
 from torneo import Torneo
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -33,19 +33,8 @@ def query_example():
     return 'Query String Example'
 
 @app.route('/graficar')
-def form_example():
-    #datosHtml=Torneo(request.args.get('arg1'))
-    #print(type(datosHtml.items()))
-
-    #print ("En teoria son los datos del torneo",datosHtml)
-    img = io.BytesIO()
-    datos = [52.958333333333336, 84.45833333333333, 41.75, 0.0, 87.58333333333333, 24.916666666666668, 10.791666666666666, 45.791666666666664, 0.0, 0.0]
-    plt.clf() 
-    plt.pie(datos, autopct="%0.1f %%")
-    plt.savefig(img, format='png')
-    img.seek(0)
-    plot_url = base64.b64encode(img.getvalue()).decode()
-    return render_template('graficar.html', imagen={ 'imagen': [plot_url, plot_url] })    #return render_template("graficar.html")
+def graficar():
+    return render_template('graficar.html', rutas=list(rutas.values()))
 
 @app.route('/json-example')
 def json_example():
@@ -54,4 +43,4 @@ def json_example():
 
 if __name__ == '__main__':
     # run app in debug mode on port 5000
-    app.run(debug=True, port=4000)
+    app.run(debug=True, port=5000)

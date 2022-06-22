@@ -1,6 +1,6 @@
-Flask==1.1.2
-Flask-SocketIO==4.3.1
-openpyxl==3.0.10
-pandas==1.4.2
-numpy==1.22.3
-plotly==5.8.2
+Flask
+Flask-SocketIO
+openpyxl
+pandas
+numpy
+plotly
