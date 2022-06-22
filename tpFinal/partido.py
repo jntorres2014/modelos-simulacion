@@ -1,71 +1,10 @@
-from random import choice,random
-from unittest import case
-from matplotlib.pyplot import eventplot
 import numpy as np
-from soupsieve import match
+from utiles import generar_fel
 
 PORCENTAJE = 0.45
 cantidadDeArrivoHinchas = 10
 cantidadDePartidaDeHinchas = 20
 tiempoTotal= 90
-
-adicion = 0
-
-cantidadDeCambios=0
-
-laterales = 0.5
-cambio= 0.07
-lesion =0.03
-penal =0.02
-ingresoHincha= 0.008 
-perro = 0.003
-falta = 0.5
-gol = 0.04
-
-fell = []
-
-
-# ranges = {
-#     'GOL': (0.,.004),
-#     'CAMBIO': (.04, 0.12),
-#     'LESION': (.120,0.0160),
-#     'LATERAL': (0.190,0.210),
-#     #'INTERRUPCION': (0.260,0.330),
-#     #'falta_amonestacion_tiroLibre': (0.330 ,0.380),
-#     'FALTA':(0.330 ,0.340),
-#     #'PENAL': ('dependeraDeFalta'), 
-#     'EVENTOEXTERNO': (0.380, 0.388),
-#     'EVENTOEXTERNO': (0.388,0.391),
-#     'NADA': (.12, 1.)
-# }
-
-ranges = {
-    'CAMBIO': (0., .004),
-    'GOL': (.004, .0052),
-    'LESION': (.0052, .0056),
-    'LATERAL': (.0056, .0064),
-    #'tiroDeEsquina': (.0064, .0070),
-    'FALTA': (.0070, .0083),
-    #'penal': ('dependeraDeFalta'), 
-    'EVENTOEXTERNO': (0.0083, 0.0086),
-    #'ingresoAnimal': (0.0085,0.0086),
-    'NADA': (.0086, 1.)
-}
-
-
-def event_in_range(num, ranges):
-    for event, rng in ranges.items():
-        if rng[0] == 0.:
-            if rng[0] <= num <= rng[1]:
-                return event
-        elif rng[0] < num <= rng[1]:
-            return event
- 
-        
-#ejemplo
-# numbers = np.random.uniform(0.,1.,10)
-# for n in numbers:
-#     print(event_in_range(n, ranges))
 
 
 class Partido(object):
@@ -79,105 +18,39 @@ class Partido(object):
         self.eventos = {}
         self.hinchasEsperando = 0
         
-        self.tiemposPerdidos = {
-        'FALTA': 0,
-        'CAMBIO':0,
-        'LATERAL':0,
-        'PENAL':0,
-        'GOL':0,
-        'LESION':0,
-        'AFORO':0,
-        'AFORO':0,
-        'EVENTOEXTERNO':0,
-        'NADA':0
-        }
-        self.cantidadInterrupciones = {
-        'FALTA': 0,
-        'CAMBIO':0,
-        'LATERAL':0,
-        'PENAL':0,
-        'GOL':0,
-        'LESION':0,
-        'AFORO':0,
-        'AFORO':0,
-        'EVENTOEXTERNO':0,
-        'NADA':0
-        }
-        # self.cantCambios = 0
-        # self.cantLaterales= 0
-        # self.cantPenal = 0
-        # self.cantGol = 0
-        # self.cantLesionados= 0
-        # self.cantAforo = 0
-        # self.cantEventoExterno = 0 
-        # self.cantFaltas = 0
-        # self.cantNada = 0
-        #self.estadisticas= {}
+        self.tiemposPerdidos = self.inicializar_contadores()
+        self.cantidadInterrupciones = self.inicializar_contadores()
         self.reloj=0
-        
-    # def __str__(self):
-    #     #return self.estadisticasPorPartido()
-    #     return ("{0} {1} {2}".format(self.tiempoEfectivo,self.reloj,self.cantNada))
-    #     #return ("Estadio: {0} Capacidad: {1} Capacidad Minima: {2} Cantidad de Accesos: {3}" ).format(self.estadio.nombre, self.estadio.capacidad,self.capacidadMinima, self.cantidadAcceso)
 
-    def nuevaFell(self):
-        numbers = np.random.uniform(0.,1.,6400)
-        for n in numbers:
-            if event_in_range(n, ranges) is None:
-                fell.append('NADA')
-            else:
-                fell.append(event_in_range(n, ranges))
-        return fell
-
-    def event_in_range(num, ranges):
-        for event, rng in ranges.items():
-            if rng[0] == 0.:
-                if rng[0] <= num <= rng[1]:
-                    return event
-            elif rng[0] < num <= rng[1]:
-                return event
+    def inicializar_contadores(self):
+        return {
+            'FALTA': 0,
+            'CAMBIO': 0,
+            'LATERAL': 0,
+            'PENAL': 0,
+            'GOL': 0,
+            'LESION': 0,
+            'AFORO': 0,
+            'AFORO': 0,
+            'EVENTOEXTERNO': 0,
+            'TIRO_DE_ESQUINA': 0,
+            'NADA': 0
+        }
  
-    def contabilizarEvento(self,evento,tiempo):
-        #print("Evento: ",evento)
-        # if (evento=='GOL'):
-        #     self.cantGol += 1
-        #     self.tiempoPerdidoGol += tiempo
-        # if cantidadDeCambios < 6:    
-        #     if (evento=='CAMBIO'):
-        #         self.cantCambios +=1
-        #         self.tiempoPerdidoCambios += tiempo
-        # if (evento=='LATERAL'):
-        #     self.cantLaterales +=1  
-        #     self.tiempoPerdidoLaterales += tiempo
-        # if (evento=='PENAL'):
-        #     self.cantPenal += 1
-        #     self.tiempoPerdidoPenal += tiempo
-        # if (evento=='LESION'):
-        #     self.cantLesionados +=1
-        #     self.tiempoPerdidoLesionados += tiempo
-        # if (evento=='AFORO'):
-        #     self.cantAforo +=1
-        #     self.tiempoPerdidoAforo += tiempo
-        # if (evento=='EVENTOEXTERNO'):
-        #     self.cantEventoExterno += 1 
-        #     self.tiempoPerdidoEventoExterno += tiempo           
-        # if (evento=='FALTA'):
-        #     self.cantFaltas +=1
-        #     self.tiempoPerdidoFaltas += tiempo
-        # if (evento=='NADA'):
-        #     self.cantNada +=1
-        #     self.tiempoPerdidoNada += tiempo
+    def contabilizarEvento(self,evento,tiempo,listaHabilitados):
         self.cantidadInterrupciones[evento] += 1
-        self.tiemposPerdidos[evento] += tiempo
+        if evento in listaHabilitados:
+            self.tiemposPerdidos[evento] += tiempo
         
-
+    def nuevaFel(self):
+        numeros_aleatorios = np.random.uniform(0., 1., 6400)
+        return generar_fel(numeros_aleatorios)
 
     def agregarEvento(self, tiempo,evento):
         self.eventos.update({tiempo:evento})
 
     def verEvento(self,evento):
         proxEvento = 'NADA'
-        #print("eventos: ",evento)
         if (evento == 'GOL'):
             tiempoPerdido = np.random.uniform(45,120)
             #probabilidad de que se vayan hinchas
@@ -187,7 +60,7 @@ class Partido(object):
                 if not(self.estadio.cumpleAforo(self.cantidadHinchas)):                
                     proxEvento = 'AFORO'        
         if (evento == 'CAMBIO'):
-            if(0):#self.cantCambios < 6):
+            if(self.cantidadInterrupciones[evento]<6):#self.cantCambios < 6):
                 #self.cantCambios +=1
                 tiempoPerdido = np.random.uniform(10,45)
             else:
@@ -213,6 +86,8 @@ class Partido(object):
         if (evento == 'LESION'):
             tiempoPerdido = np.random.uniform(30,120)
             proxEvento = 'CAMBIO'
+        if (evento == 'TIRO_DE_ESQUINA'):
+            tiempoPerdido = np.random.randint(5, 20)
         if (evento == 'AFORO'):
             tiempoPerdido = np.random.uniform(30,60)
             #proxEvento == 'ARRIVOS'
@@ -233,6 +108,8 @@ class Partido(object):
                     self.hinchasEsperando = resto
         if (evento == 'EVENTOEXTERNO'):
             tiempoPerdido = np.random.randint(60,300)
+        if (evento == 'TIRO_DE_ESQUINA'):
+            tiempoPerdido = np.random.randint(30,70)
         if (evento == 'NADA'):
             tiempoPerdido = 1
             proxEvento= None
@@ -251,32 +128,9 @@ class Partido(object):
         self.eventos = self.crearFell() 
         return self.eventos           
         
-    def estadisticasPorPartido(self):
-        print("*******TIEMPOS PERDIDOS {0}\n CANTIDADESSSSS {1}\n ".format(self.tiemposPerdidos,self.cantidadInterrupciones))
-        # print("Estadisticas: \ntiempoFaltas: {0} \ntiempoCambios: {1} \ntiempoLaterales: {2} \ntiempoPenal: {3} \ntiempoGol: {4} \ntiempoLesionados: {5}\ntiempoAforo: {6}\ntiempoEventosExternos: {7}\n"
-        # .format(self.tiempoPerdidoFaltas,
-        # self.tiempoPerdidoCambios,
-        # self.tiempoPerdidoLaterales,
-        # self.tiempoPerdidoPenal,
-        # self.tiempoPerdidoGol,
-        # self.tiempoPerdidoLesionados,
-        # self.tiempoPerdidoAforo,
-        # self.tiempoPerdidoEventoExterno)
-        # )
-        # print("Cantidades: \ncantidad Faltas: {0}\ncantidad Cambios: {1}\ncantidad Laterales: {2} \ncantidad Penal: {3} \ncantidad Gol: {4} \ncantidad Lesionados: {5}\ncantidad Aforo: {6}\ncantidad EventosExternos: {7}\ncantidad Nada {8} \n"
-        # .format(self.cantFaltas,
-        # self.cantCambios,
-        # self.cantLaterales,
-        # self.cantPenal,
-        # self.cantGol,
-        # self.cantLesionados,
-        # self.cantAforo,
-        # self.cantEventoExterno,
-        # self.cantNada)
-        # )
-        # print ("Tiempo Efectivo: ", ((5400 - (self.tiempoPerdidoFaltas+self.tiempoPerdidoCambios +self.tiempoPerdidoLaterales +self.tiempoPerdidoPenal +self.tiempoPerdidoGol+
-        # self.tiempoPerdidoLesionados+self.tiempoPerdidoAforo + self.tiempoPerdidoEventoExterno))/60) )
-        # #return "hola"
-
+    def obtenerEstadisticasDePartido(self):
+        print("*************PARTIDO************")
+        print(" TIEMPO perdido {0}\n CANTIDADESSSSS {1}\n ".format(self.tiemposPerdidos,self.cantidadInterrupciones))
+  
     def estadisticasFinales():
         pass

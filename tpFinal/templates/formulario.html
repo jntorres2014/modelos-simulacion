@@ -45,32 +45,51 @@
             <div class="container p-5 my-7 border">
                 <div class="col-auto">
                     <label for="">Nombre de torneo</label>
-                    <input name="torneo" id="id_torneo" required type="text" placeholder="Nombre">
+                    <input name="nombreTorneo" id="id_torneo" required type="text" placeholder="Nombre">
                 </div>
                 <div class="col-auto">
                     <label for="cantidadEquipos">Cantidad de Equipos</label>
                     <input name="cantidadEquipos" required type="number" min="2" placeholder="Cantidad De Equipos">
                 </div>
                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="laterales" value="Laterales" placeholder="Laterales" checked>
-                    <label for="Laterates"> Latereales</label>
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="LATERAL" placeholder="Laterales" checked>
+                    <label for="Laterates"> Laterales</label>
                 </div>
                 <div class="form-check form-switch ">
-                    <input class="form-check-input" type="checkbox" name="gol" value="gol" placeholder="Goles"checked>
-                    <label for="gol"> Gol</label>
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="GOL" placeholder="gol" checked>
+                    <label for="GOL"> Gol</label>
                 </div>
-                
+                <div class="form-check form-switch ">
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="CAMBIO" placeholder="CAMBIO" checked>
+                    <label for="CAMBIO"> Cambio</label>
+                </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="faltas" value="Faltas" placeholder="Faltas"checked>
+
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="FALTA" placeholder="Faltas"checked>
                     <label for="Faltas"> Faltas</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" value="" placeholder="" checked>
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="LESION" placeholder="Lesion" checked>
                     <label for="Faltas"> Lesionado</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" value="" placeholder="" checked>
-                    <label for="Faltas"> Otros</label>
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="TIRO_DE_ESQUINA" placeholder="TIRO_DE_ESQUINA" checked>
+                    <label for="TIRO_DE_ESQUINA"> Tiro de esquina</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="lista[]" value="PENAL" placeholder="PENAL" checked>
+                    <label for="PENAL">Penal</label>
+                </div>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name= "lista[]" value="AFORO" placeholder="Aforo" checked>
+
+                    <label for="AFORO"> Aforo</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name= "lista[]" value="EVENTOEXTERNO" placeholder="EVENTOEXTERNO" checked>
+
+                    <label for="EVENTOEXTERNO"> Evento Externo</label>
                 </div>
 
                 <div class="col-auto">
