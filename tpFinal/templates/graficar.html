@@ -4,7 +4,9 @@
         <center>
             <h1>TIEMPOS PERDIDOS</h1>
         </center>
-        <img src="./static/tiemposPerdidos.png" alt="">
+        {% for ruta in rutas %}
+            <img src="{{ruta}}" alt="">
+        {%endfor%}
     </div>
     <div>
         <center>

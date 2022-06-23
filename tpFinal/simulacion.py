@@ -8,6 +8,7 @@ from estadio import Estadio
 from partido import Partido
 from torneo import Torneo
 import plotly.graph_objects as go
+import plotly.express as px
 import base64
 import io
 
@@ -17,6 +18,18 @@ from fechas import Fechas
 #contFechas= 0
 tiempoTotalPartido = 5400
 #contPartido = 0
+
+rutas = { # rutas para las imgs generadas
+
+    'tiemposPerdidosTorneo': './static/tiemposPerdidosTorneo.png',
+    'cantidadesTorneo': "./static/cantidadesTorneo.png",
+    'tiempoEfectivoFecha': "./static/tiempoEfectivo.png",
+    "tiempoEfectivoPartidos": "./static/tiempoEfectivoPartido.png"
+
+}
+
+
+
 class Simulacion(object):
     def __init__(self,torneo):
         self.torneo = torneo
@@ -64,7 +77,7 @@ class Simulacion(object):
                 fecha.mostrarEstadisticasFecha()
                 contFechas += 1
                 self.torneo.mostrarEstadisticasDeTorneo()
-            tiemposPertidos, cantidades=self.mostrarEstadisticasDeSimulacion(self.torneo)
+            tiemposPertidos, cantidades = self.mostrarEstadisticasDeSimulacion(self.torneo)
             self.datosTorneo.update({contTorneo:[tiemposPerdidos,cantidades]})
             contTorneo +=1
         self.generarGraficos(self.torneo)
@@ -73,22 +86,36 @@ class Simulacion(object):
     
         
     def mostrarEstadisticasDeSimulacion(self,torneo):
+        
         estadisticasTiempos= []
         estadisticasCantidades = []
         tiemposLista = []
         cantidadesLista = []
         cantidadTotalDePartidos = len(torneo.fechasTorneo) * torneo.cantidadEquipos
         for eventos,tiempos in torneo.tiemposPerdidos.items():
-            #if eventos != 'NADA':
+            if eventos != 'NADA':
                 estadisticasTiempos.append(tiempos/cantidadTotalDePartidos)
                 tiemposLista.append(eventos)
                 #print(eventos,type(tiempos))
 
         for eventos,cantidad in torneo.cantidadInterrupciones.items():
-            #if eventos != 'NADA':
+            if eventos != 'NADA':
                 estadisticasCantidades.append(cantidad/cantidadTotalDePartidos)
                 cantidadesLista.append(eventos)
-        plt.clf() 
+        plt.clf()
+        
+        # long_df = px.data.medals_long()
+
+        # fig = px.bar(long_df, x="nation", y="count", color="medal", title="Long-Form Input")
+        # fig.show()
+
+
+        # df = px.data.gapminder().query("continent == 'Oceania'")
+        # fig = px.bar(df, x='year', y='pop',
+        #      hover_data=['lifeExp', 'gdpPercap'], color='country',
+        #      labels={'pop':'population of Canada'}, height=400)
+        # fig.write_image(rutas['tiempoEfectivoFecha']) 
+
         #print(estadisticasTiempos)
         #print(estadisticasCantidades)
         #colores = ['red','green','blue','yellow','orange','black','violet','lightblue','pink']
@@ -101,13 +128,13 @@ class Simulacion(object):
         plt.clf() 
                 
         fig = go.Figure(data=[go.Pie(labels=cantidadesLista, values=estadisticasCantidades)])
-        fig.write_image("./static/cantidades.png")
+        fig.write_image(rutas['cantidadesTorneo'])
         print(type(fig))
         print(fig)
         #fig.show()
         #fig.clf()                        
         fig = go.Figure(data=[go.Pie(labels=tiemposLista, values=estadisticasTiempos)])
-        fig.write_image("./static/tiemposPerdidos.png")
+        fig.write_image(rutas['tiemposPerdidosTorneo'])
 
         # plt.pie(estadisticasTiempos,labels=tiemposLista,shadow=True,autopct='%1.1f%%')
         # plt.title("Tiempos perdidos por interrupcion")
@@ -126,17 +153,26 @@ class Simulacion(object):
         cantidadesPerdidasFechas = []
         tiempoEfectivoFecha = []
         for fechas in torneo.fechasTorneo:
+            print("fecha {0} \n{1}\n".format(type(fechas),fechas))
             tiempoEfectivoTorneo.append(fechas.tiempoEfectivoFecha)
-            tiemposPerdidosTorneo.append(fechas.tiemposPerdidos.values())
-            cantidadesPerdidasTorneo.append(fechas.cantidadInterrupciones.values())
+            tiemposPerdidosTorneo.append(fechas.tiemposPerdidos)
+            cantidadesPerdidasTorneo.append(fechas.cantidadInterrupciones)
             for partido in fechas.partidos:
-                tiemposPerdidosFechas.append(partido.tiemposPerdidos.values())
-                cantidadesPerdidasFechas.append(partido.cantidadInterrupciones.values())
+                tiemposPerdidosFechas.append(partido.tiemposPerdidos)
+                cantidadesPerdidasFechas.append(partido.cantidadInterrupciones)
                 tiempoEfectivoFecha.append(partido.tiempoEfectivo)
-                
         print("TORNEO:\n Tiempo efectivo {0}\n tiempos Perdidos{1}\n Cantidades Perdidas{2}\n ".format( tiempoEfectivoTorneo,tiemposPerdidosTorneo,cantidadesPerdidasTorneo))
         print('FECHAS:\nTiempo efectivo {0}\n tiempos Perdidos{1}\n Cantidades Perdidas{2}\n '.format(tiempoEfectivoFecha,tiemposPerdidosFechas,cantidadesPerdidasFechas))
+        cont=0
+        #for tiempoPerdido in tiemposPerdidosTorneo:
+        df = pd.DataFrame(tiemposPerdidosTorneo)
+        
+            #df = pd.DataFrame([[tiempoPerdido[key]] for key in tiempoPerdido.keys()], columns=['Evento', 'tiempo'])        
+        print(df)
 
+        fig = px.bar(df, title="Tiempo efectivo por fechas")
+        fig.write_image(rutas['tiempoEfectivoFecha']) 
+        
     def obtenerGrafico(self,torneo):
         print("ESTTOY EN OBTENER GRAFICO")
         print(torneo)
